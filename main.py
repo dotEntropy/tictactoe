@@ -1,5 +1,4 @@
 import math
-import numpy as np
 import sys
 
 
@@ -10,7 +9,7 @@ class Main:
         column = (n-1) % 3
         row = math.floor((n-1) / 3)
 
-        self.grid = np.zeros((3, 3), dtype=np.int8)
+        self.grid = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
         self.grids_covered = []
         self.turn = 1 
     
@@ -28,17 +27,17 @@ class Main:
     
     def is_won(self) -> bool:
         # check rows
-        max_row = np.max([sum([self.grid[row][col] for col in range(3)]) for row in range(3)])
+        max_row = max([sum([self.grid[row][col] for col in range(3)]) for row in range(3)])
         # check columns
-        max_column = np.max([sum([self.grid[row][col] for row in range(3)]) for col in range(3)])
+        max_column = max([sum([self.grid[row][col] for row in range(3)]) for col in range(3)])
         # sum diagonal / 
         diagonal_slash_total = sum([self.grid[row][col] for row, col in zip(range(3), range(2, -1, -1))])
         # sum diagonal \ 
         diagonal_bslash_total = sum([self.grid[cell][cell] for cell in range(3)])
         # check diagonal
-        max_diagonal = np.max([diagonal_slash_total, diagonal_bslash_total])
+        max_diagonal = max([diagonal_slash_total, diagonal_bslash_total])
         # check all
-        return np.max([max_row, max_column, max_diagonal]) == 3
+        return max([max_row, max_column, max_diagonal]) == 3
 
     def current_player(self) -> str:
         player_index = (self.turn) % 2
